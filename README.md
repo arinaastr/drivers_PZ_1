@@ -60,3 +60,18 @@ close(3)                                = 0
 exit_group(0)                           = ?
 +++ exited with 0 +++
 ```
+## Системные вызовы
+Мы находимся в системе с ядром `6.8.0-79-generic`, что можем выяснить по команде `uname -r`,  ищем системные вызовы `read`, `close` и `openat` в исходниках ядра.
+
+###read fs/read_write.c
+```Terminal
+SYSCALL_DEFINE3(read, unsigned int, fd, char __user *, buf, size_t, count)
+{
+        return ksys_read(fd, buf, count);
+}
+```
+```
+SYSCALL_DEFINE3(write, unsigned int, fd, const char __user *, buf,                                                                      size_t, count)
+{
+        return ksys_write(fd, buf, count);
+}
